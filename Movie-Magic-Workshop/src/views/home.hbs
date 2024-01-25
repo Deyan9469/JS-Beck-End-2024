@@ -2,7 +2,6 @@
     <h1>All Movies</h1>
     <div class="band">
 
-        <!-- If there are posts for creature in the database display each of them -->
         {{#each movies}}
         <div class="flip flip-vertical">
             <div class="front">
@@ -12,7 +11,7 @@
                 <h1>{{title}}</h1>
                 <h2>Genre: {{genre}}</h2>
                 <p>Description: {{description}}</p>
-                <a href="#" class="details">Details</a>
+                <a href="/movies/{{_id}}" class="details">Details</a>
             </div>
         </div>
         {{else}}
