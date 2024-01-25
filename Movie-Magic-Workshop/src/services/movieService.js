@@ -15,6 +15,8 @@ exports.getAll = () => {
 exports.getOne = (movieId) => {
   const movie = movies.find(movie => movie._id === Number(movieId));
 
+  movie.rating = new Array(Number(movie.rating)).fill(true);
+
   return movie;
 }
 

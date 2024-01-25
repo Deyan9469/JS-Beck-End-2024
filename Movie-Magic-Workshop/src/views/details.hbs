@@ -4,7 +4,7 @@
         <div class="card_left">
             <div class="card_datails">
 
-                    {{!-- {{#with movie}} {{/woth}} hack for less typing for movie. --}}
+                {{!-- {{#with movie}} {{/woth}} hack for less typing for movie. --}}
                 <h1>{{movie.title}}</h1>
                 <div class="card-movie">
                     <div class="first-info">
@@ -13,11 +13,10 @@
                     </div>
                     <div class="second-info">
                         <p class="card-year">Year: {{movie.year}}</p>
-                        <p class="card-ranking">Rating: <span id="stars">&#x2605; &#x2605; &#x2605; &#x2605;</span></p>
+                        <p class="card-ranking">Rating: <span id="stars"> {{#each movie.rating}} &#x2605; {{/each}}</span> </p>
                     </div>
-
                 </div>
-
+                
                 <p class="disc">{{movie.description}}</p>
             </div>
         </div>
