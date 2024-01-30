@@ -12,6 +12,7 @@ const movieSchema = new mongoose.Schema({
      director: {
         type: String,
         required: true,
+        lowercase: true,
      },
      year: {
         type: Number,
