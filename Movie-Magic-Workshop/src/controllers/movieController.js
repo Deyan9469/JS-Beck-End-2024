@@ -4,9 +4,20 @@ const movieService = require('../services/movieService');
 const castService = require('../services/castService');
 const { isAuth } = require('../middlewares/authMiddleware')
 
+router.get('/movies/:movieId', async (req, res) => {
+    const movieId = req.params.movieId;
+    const movie = await movieService.getOne(movieId).lean();
+
+    //TODO : this is not perfect, use handlebars helpers
+    movie.rating = new Array(Number(movie.rating)).fill(true);
+
+    res.render('movie/details', { movie });
+});
+
 router.get('/create', (req, res) => {
     res.render('create');
 });
+
 router.post('/create', isAuth, async (req, res) => {
     const newMovie = req.body;
     try {
@@ -20,17 +31,6 @@ router.post('/create', isAuth, async (req, res) => {
 
 });
 
-router.get('/movies/:movieId', async (req, res) => {
-    const movieId = req.params.movieId;
-    const movie = await movieService.getOne(movieId).lean();
-    // const casts = await castService.getByIds(movie.casts).lean();
-
-
-    //TODO : this is not perfect, use handlebars helpers
-    movie.rating = new Array(Number(movie.rating)).fill(true);
-
-    res.render('details', { movie });
-});
 
 router.get('/movies/:movieId/attach', async (req, res) => {
     const movie = await movieService.getOne(req.params.movieId).lean();
