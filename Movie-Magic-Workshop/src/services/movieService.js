@@ -1,4 +1,5 @@
 const Movie = require('../models/Movie');
+const Cast = require('../models/Cast');
 
 exports.getAll = () => Movie.find();
 

@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const routes = require('./routes');
+
 const configHandlebars = require('./config/configHandlebars');
 const configExpress = require('./config/configExpress');
+const routes = require('./routes');
 
 const app = express();
 const port = 5000;
