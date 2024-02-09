@@ -7,7 +7,7 @@ const { isAuth } = require('../middlewares/authMiddleware')
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getOne(movieId).lean();
-    const isOwner = movie.owner && movie.owner == req.user?._id;// ? - optianal channing
+    const isOwner = movie.owner == req.user?._id;// ? - optianal channing
 
     //TODO : this is not perfect, use handlebars helpers
     movie.rating = new Array(Number(movie.rating)).fill(true);
@@ -15,7 +15,7 @@ router.get('/movies/:movieId', async (req, res) => {
     res.render('movie/details', { movie, isOwner });
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('create');
 });
 
@@ -24,7 +24,7 @@ router.post('/create', isAuth, async (req, res) => {
         ...req.body,
         owner: req.user._id,
     };
-    newMovie.owner = req.user._id;
+
     try {
         await movieService.create(newMovie);
 
@@ -37,7 +37,7 @@ router.post('/create', isAuth, async (req, res) => {
 });
 
 
-router.get('/movies/:movieId/attach', async (req, res) => {
+router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
     const movie = await movieService.getOne(req.params.movieId).lean();
     const casts = await castService.getAll().lean();
     //TODO: remove already added casts
@@ -67,14 +67,13 @@ router.post('/movies/:movieId/edit', isAuth, async (req, res) => {
     await movieService.edit(req.params.movieId, editedMovie);
 
     res.redirect(`/movies/${req.params.movieId}`);
-
 });
 
 
-router.get('/movies/:movieId/delete', isAuth, async (req,res)=>{
+router.get('/movies/:movieId/delete', isAuth, async (req, res) => {
 
     await movieService.delete(req.params.movieId);
-    
+
     res.redirect('/');
 
 });
