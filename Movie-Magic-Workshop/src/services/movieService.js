@@ -4,6 +4,8 @@ exports.getAll = () => Movie.find();
 
 exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 
+exports.edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
+
 exports.search = (title, genre, year) => {
   let query = {};
 
@@ -36,3 +38,5 @@ exports.attach = (movieId, castId) => {
 
   // return movie.save();
 }
+
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
